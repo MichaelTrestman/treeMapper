@@ -25,8 +25,6 @@ Object.keys(OriginHypotheses).forEach(function(origHyp){
   function mapTraits (){
     TraitMapper.mapTraits({"conscious": null}, ['Animals'])
     TraitMapper.mapTraits({"conscious": 'dolphinately'}, OriginHypotheses[origHyp])
-
-    console.log(d3.select(this))
     d3.selectAll('#hyp-list li').style('color', 'black')
     d3.select(this).style('color', 'gold')
     updateColors();
