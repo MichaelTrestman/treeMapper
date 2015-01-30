@@ -1,4 +1,6 @@
 
+
+
 /*
 	ok so what needs to happen is that:
 		in the database, taxa are stored with all of the information needed to generate the visualization:
@@ -704,25 +706,6 @@ var AnimalTree = {
   ],
 }
 
-var addSize = function(rootOfTree, size){
-	rootOfTree.size = size;
-	rootOfTree.children.forEach(function(child){
-		addSize(child, 0.8*size)
-	})
-}
-var addCharge = function(rootOfTree, charge){
-	rootOfTree.charge = charge;
-	rootOfTree.children.forEach(function(child){
-		addCharge(child, 0.8*charge)
-	})
-}
-addSize(AnimalTree, 50)
-addCharge(AnimalTree, 1400	)
 
 
 
-
-
-
-
-// exports.AnimalTree = AnimalTree;

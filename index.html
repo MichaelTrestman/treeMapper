@@ -16,6 +16,10 @@
       stroke-width: 3px;
     }
 
+    .node:hover text {
+      font-size: 40px;
+    }
+
     .node text {
       font: 12px sans-serif;
     }
@@ -25,142 +29,54 @@
       stroke: black;
       stroke-width: 1px;
     }
+    .sidebar {
+      /*position: fixed;*/
+      /*left: 0;*/
+    }
+    .bordered {
+      border: solid 1px black;
+    }
 
   </style>
 </head>
-<script src="./d3.v3.js"></script>
-<script src="./treeData.js"></script>
-
 <body>
+  <div class='container'>
+    <div class='row panel'>
+      <div id='sidebar' class='sidebar'>
+        <p>Click to highlight a group of animals.<br> The following are the groups proposed by various scientists to be exclusively conscious. See <a href='http://plato.stanford.edu/entries/consciousness-animal/#evolution'>Stanford Encyclopedia article</a></p>
+        <ul id='hyp-list' class='no-list-styles'>
+            <!-- <li><div class='bordered' id='humans'>Humans</div></li>
+            <li><div class='bordered' id='greatApes'>Apes</div></li>
+            <li><div class='bordered' id='mammals'>Mammals</div></li>
+            <li><div class='bordered' id='amniotes'>Amniotes</div></li>
+            <li><div class='bordered' id='bigThree'>Big-Three</div></li>
+            <li><div class='bordered' id='animals'>Animals</div></li> -->
+        </ul>
+      <div id='info-panel' class='panel '>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <script src="./d3.v3.js"></script>
+  <script src="./trait-mapper.js"></script>
+  <script src="./treeData.js"></script>
+  <script type="text/javascript" src='dynamic-style.js'></script>
+  <script type="text/javascript" src='treeLayout.js'>
+  </script>
+  <script type="text/javascript" src='view-pan.js'></script>
 
 </body>
-
-<script type="text/javascript">
-
-var height = 600,
-    width = 900,
-    margin = 50,
-    i = 0,
-    duration = 300,
-    root;
-
-  var tree = d3.layout.tree()
-    .size([height, width]);
-
-  var diagonal = d3.svg.diagonal()
-    .projection(function(d) {return [d.y, d.x]; });
-
-  var svg = d3.select('body').append('svg')
-    .attr('width', width + 2*margin)
-    .attr('height', width + 1.25*margin)
-    .append('g')
-    .attr('transform', 'translate(' + margin + ',' + margin*0.666 + ')');
-
-  root = AnimalTree;
-  root.x0 = height / 2;
-  root.y0 = 0;
-
-  update(root);
-
-
-  d3.select(self.frameElement).style('height', '600px')
-
-  function update (source){
-    var nodes = tree.nodes(root),
-      links = tree.links(nodes);
-
-    nodes.forEach(function(d){ d.y = d.depth * 180; });
-
-    var node = svg.selectAll('g.node')
-      .data(nodes, function(d){ return d.id || (d.id = ++i); });
-
-    var nodeEnter = node.enter().append('g')
-      .attr('class', 'node')
-      .attr('transform', function(d){ return 'translate(' + source.y0 + ',' + source.x0 + ')'; })
-      .on('click', click);
-
-    nodeEnter.append('circle')
-      .attr('r', 1e-6)
-      .style('fill', function(d){ return d._children ? 'lightsteelblue' : '#fff'; });
-
-    nodeEnter.append('text')
-      .attr('x', function(d) {return d.children || d._children ? -13 : 13; })
-      .attr('dy', '.35em')
-      .attr('text-anchor', function(d){ return d.children || d._children ? 'end' : 'start';})
-      .text(function(d){ return d.name })
-      .style('fill-opacity', 1e-6);
-
-    var nodeUpdate = node.transition()
-      .duration(duration)
-      .attr('transform', function(d){ return 'translate(' + d.y + ',' + d.x + ')'; });
-
-    nodeUpdate.select('circle')
-      .attr('r', 10)
-      .style('fill', function(d){ return d._children ? 'lightsteelblue' : '#fff'; });
-
-    nodeUpdate.select('text')
-      .style('fill-opacity', 1);
-
-    var nodeExit = node.exit().transition()
-      .duration(duration)
-      .attr('transform', function(d){
-        return 'translate(' + source.y + ',' + source.x + ')';
-      })
-      .remove();
-    nodeExit.select('circle')
-      .attr('r', 1e-6);
-
-    var link = svg.selectAll('path.link')
-      .data(links, function(d){ return d.target.id; });
-
-    link.enter().insert('path', 'g')
-      .attr('class', 'link')
-      .attr('d', function(d){
-        var o = {
-          x: source.x0,
-          y: source.y0
-        };
-        return diagonal({
-          source: o,
-          target: o
-        });
-      });
-
-    link.transition()
-      .duration(duration)
-      .attr('d', diagonal);
-
-    link.exit().transition()
-      .duration(duration)
-      .attr('d', function(d){
-        var o = {
-          x: source.x,
-          y: source.y
-        };
-        return diagonal({
-          source: o,
-          target: o
-        });
-      }).remove();
-  }
-
-  function click(d){
-    if (d.children){
-      d._children = d.children;
-      d.children = null;
-    } else {
-      d.children = d._children;
-      d._children = null;
-    }
-    update(d);
-  }
-
-
-</script>
-
-
-
-
-
-
 </html>
