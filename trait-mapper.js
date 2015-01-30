@@ -1,5 +1,19 @@
+
+
+// addSize(AnimalTree, 50)
+
 var TraitMapper = (function(){
   var _tree = null;
+
+  var recursivelyAddSize = function(node, size){
+
+    node.size = size;
+
+    node.children.forEach(function(child){
+      recursivelyAddSize(child, size)
+    })
+  }
+
   var recursivelyMapTraitsToClade = function(traits, node){
 
     Object.keys(traits).forEach(function(trait){
@@ -55,6 +69,13 @@ var TraitMapper = (function(){
     },
     hideDescendantsOf: function(node){
       recursivelyHideChildren(node);
+    },
+    hideAll: function(){
+      recursivelyHideChildren(_tree);
+    },
+    addSize: function(size){
+      size = size ? size : 50
+      recursivelyAddSize(_tree, size);
     }
 
   }

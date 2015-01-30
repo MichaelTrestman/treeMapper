@@ -4,7 +4,7 @@ var leftArrow  = 37;  // Key code for the left arrow key.
 var upArrow    = 38;
 var rightArrow = 39;
 var downArrow  = 40;
-var panRate    = 10;  // Number of pixels to pan per key press.
+var panRate    = 30;  // Number of pixels to pan per key press.
 var zoomIn = 187;
 var zoomOut = 189;
 var viewbox;
@@ -43,12 +43,12 @@ function processKeyPress(evt)
       break;
     case zoomIn:
       evt.preventDefault();
-      viewBoxValues[2] -= 10;
+      viewBoxValues[2] -= 50;
       // viewBoxValues[3] += 1;
       break;
     case zoomOut:
       evt.preventDefault();
-      viewBoxValues[2] += 10;
+      viewBoxValues[2] += 50;
       // viewBoxValues[3] -= 1;
       break;
   } // switch

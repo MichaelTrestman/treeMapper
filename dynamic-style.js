@@ -1,3 +1,16 @@
+
+
+var rings = {
+
+  flying: {
+    radius: function(d){
+      d.size + 1;
+    },
+    color: "rgba(22, 50, 200, 0.4)"
+  }
+}
+
+
 var colors = {
   baseline: "rgba(10, 100, 10, 0.4)",
   conscious: "rgba(201, 181, 59, 0.4)",
