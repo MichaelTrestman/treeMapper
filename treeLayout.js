@@ -1,13 +1,15 @@
-var height = 1200,
-    width = 900,
+var height = 700,
+    width = 1100,
     margin = 50,
     i = 0,
     duration = 300,
-    root;
+    root,
+    heightShift = 1.0;
+    ;
 
 var tree = d3.layout.tree()
   .size([height, width])
-  .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
+  .separation(function(a, b) { return 1 /*(a.parent == b.parent ? 2 : 1) / a.depth */; });
 
 // var diagonal = d3.svg.diagonal.radial()
 //     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
@@ -18,7 +20,7 @@ var diagonal = d3.svg.diagonal()
 var svg = d3.select('body').append('svg')
   .attr('id', 'svg-canvas')
   .attr('width', width + 4*margin)
-  .attr('height', width + 1.25*margin)
+  .attr('height', height + 1.25*margin)
   .attr('viewBox', '-100 300 2000 600')
   .append('g')
   .attr('transform', 'translate(' + margin + ',' + margin*0.666 + ')');
