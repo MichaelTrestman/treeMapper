@@ -1,5 +1,19 @@
+
+
+// addSize(AnimalTree, 50)
+
 var TraitMapper = (function(){
   var _tree = null;
+
+  var recursivelyAddSize = function(node, size){
+
+    node.size = size;
+
+    node.children.forEach(function(child){
+      recursivelyAddSize(child, size)
+    })
+  }
+
   var recursivelyMapTraitsToClade = function(traits, node){
 
     Object.keys(traits).forEach(function(trait){
@@ -31,12 +45,35 @@ var TraitMapper = (function(){
     if (node.children) {
       node._children = node.children;
       node.children = null;
-    }
-    if (node._children) {
       node._children.forEach(function(child){
-        recursivelyHideChildren(child);
+        recursivelyHideChildren(child)
       })
+    }
+  }
+  var
+  showChildren = function(node){
+    if (node._children) {
+      node.children = node._children;
+      node._children = null;
+    }
+  }
+
+  var recursivelyFindNode = function(name){
+    _foundNode = null;
+
+    function isNode(node, name){
+      if (name == node.name){ _foundNode = node; };
+      if (_foundNode) { return};
+      if (node.children) {
+        node.children.forEach(function(child){
+          isNode(child, name);
+        })
+      };
     };
+
+    isNode(_tree, name);
+
+    return _foundNode;
   }
 
   return {
@@ -55,6 +92,13 @@ var TraitMapper = (function(){
     },
     hideDescendantsOf: function(node){
       recursivelyHideChildren(node);
+    },
+    addSize: function(size){
+      size = size ? size : 50
+      recursivelyAddSize(_tree, size);
+    },
+    getNode: function(nodeName){
+      return recursivelyFindNode(nodeName)
     }
 
   }

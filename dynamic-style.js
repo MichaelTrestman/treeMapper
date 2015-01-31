@@ -1,11 +1,12 @@
+
 var colors = {
-  baseline: "rgba(10, 100, 10, 0.4)",
+  brains: "rgba(10, 100, 10, 0.4)",
   conscious: "rgba(201, 181, 59, 0.4)",
-  active: "rgba(200, 10, 40, 0.4)",
-  flying: "rgba(22, 50, 200, 0.4)"
+  homeothermy: "rgba(200, 10, 40, 0.4)",
+  flight: "rgba(22, 50, 200, 0.4)",
 }
 
-OriginHypotheses = {
+var OriginHypotheses = {
 
   humans: ['Humans'],
   greatApes: ['Hominidae'],
@@ -23,15 +24,14 @@ Object.keys(OriginHypotheses).forEach(function(origHyp){
   document.getElementById(origHyp).addEventListener("click", mapTraits);
 
   function mapTraits (){
+
     TraitMapper.mapTraits({"conscious": null}, ['Animals'])
     TraitMapper.mapTraits({"conscious": 'dolphinately'}, OriginHypotheses[origHyp])
     d3.selectAll('#hyp-list li').style('color', 'black')
     d3.select(this).style('color', 'gold')
     updateColors();
   }
-
 })
-
 
 function updateColors(){
   var circulos = d3.selectAll('circle');

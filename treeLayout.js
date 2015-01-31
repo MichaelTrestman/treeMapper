@@ -1,12 +1,18 @@
-var height = 600,
-    width = 900,
+var height = 700,
+    width = 1100,
     margin = 50,
     i = 0,
     duration = 300,
-    root;
+    root,
+    heightShift = 1.0;
+    ;
 
 var tree = d3.layout.tree()
-  .size([height, width]);
+  .size([height, width])
+  .separation(function(a, b) { return 1 /*(a.parent == b.parent ? 2 : 1) / a.depth */; });
+
+// var diagonal = d3.svg.diagonal.radial()
+//     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
 
 var diagonal = d3.svg.diagonal()
   .projection(function(d) {return [d.y, d.x]; });
@@ -14,14 +20,17 @@ var diagonal = d3.svg.diagonal()
 var svg = d3.select('body').append('svg')
   .attr('id', 'svg-canvas')
   .attr('width', width + 4*margin)
-  .attr('height', width + 1.25*margin)
+  .attr('height', height + 1.25*margin)
   .attr('viewBox', '-100 300 2000 600')
   .append('g')
   .attr('transform', 'translate(' + margin + ',' + margin*0.666 + ')');
 
 
 TraitMapper.setTree(AnimalTree)
-root = AnimalTree;
+// TraitMapper.setTree(AmnioteTree)
+
+TraitMapper.addSize(20);
+root = TraitMapper.getMappedTree();
 
 
 
@@ -43,14 +52,22 @@ function update (source){
 
   var nodeEnter = node.enter().append('g')
     .attr('class', 'node')
+    .attr('id', function  (d) {
+      return d.name
+    })
     .attr('transform', function(d){
       if (!d.parent) { return 'translate(0,0)'};
+      if ( isNaN(d.parent.x) || isNaN(d.parent.y) ) { return 'translate(0,0)' };
+
       return 'translate(' + d.parent.y + ',' + d.parent.x + ')';
     })
     .on('click', click);
 
   nodeEnter.append('circle')
-    .attr('r', 1e-6);
+    .attr('r', function(d){
+      if (d._children) { d.size *= 1.25}
+      return d.size
+    });
     // .style('fill', function(d){ return d._children ? '#aaa' : '#fff'; });
 
   nodeEnter.append('text')
@@ -62,10 +79,17 @@ function update (source){
 
   var nodeUpdate = node.transition()
     .duration(duration)
-    .attr('transform', function(d){ return 'translate(' + d.y + ',' + d.x + ')'; });
+    // .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+
+    .attr('transform', function(d){
+
+      return 'translate(' + d.y + ',' + d.x + ')';
+    });
 
   nodeUpdate.select('circle')
-    .attr('r', function(d){     return d._children ? 30 : 20 });
+    .attr('r', function(d){
+      return d.size
+    });
     // .style('fill', function(d){ return d._children ? '#aaa' : '#fff'; });
 
   nodeUpdate.select('text')
@@ -74,6 +98,7 @@ function update (source){
   var nodeExit = node.exit().transition()
     .duration(duration)
     .attr('transform', function(d){
+      if (!d.parent) return "translate(0,0)";
       return 'translate(' + d.parent.y + ',' + d.parent.x + ')';
     })
     .remove();
@@ -87,7 +112,6 @@ function update (source){
     .attr('class', 'link')
     .attr('d', function(d){
       if (d.parent){
-
         var o = {
           x: source.x0,
           y: source.y0
@@ -119,16 +143,22 @@ function update (source){
     }).remove();
     updateColors();
 }
+// not working!
+// TraitMapper.hideDescendantsOf( document.getElementById('Animals') );
 
 function click(d){
+
   if (d.children){
     TraitMapper.hideDescendantsOf(d);
+    d.size *= 1.25
     // d._children = d.children;
     // d.children = [];
   } else if (d._children){
     d.children = d._children;
     d._children = null;
+    d.size *= 0.8
   }
+
   update(TraitMapper.getMappedTree());
   updateColors();
 }
