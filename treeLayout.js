@@ -141,7 +141,8 @@ function update (source){
         target: o
       });
     }).remove();
-    updateColors();
+
+    TraitMapDisplay.traitColorRings();
 }
 // not working!
 // TraitMapper.hideDescendantsOf( document.getElementById('Animals') );
@@ -160,6 +161,6 @@ function click(d){
   }
 
   update(TraitMapper.getMappedTree());
-  updateColors();
+  TraitMapDisplay.traitColorRings();
 }
 

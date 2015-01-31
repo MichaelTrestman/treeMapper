@@ -8,12 +8,12 @@
       cursor: pointer;
     }
     svg {
-      background-color: rgba(10, 10, 10, 0.2);
+      background-color: rgba(190, 190, 190, 1);
     }
     .node circle {
-      fill: #fff;
-      stroke: steelblue;
-      stroke-width: 3px;
+      fill: rgba(200, 200, 160, 0.9);
+      /*stroke: black;
+      stroke-width: 1px;*/
     }
 
     .node:hover text {
@@ -21,6 +21,7 @@
     }
 
     .node text {
+
       font: 12px sans-serif;
     }
 
@@ -64,15 +65,19 @@
   <script src="./treeData.js"></script>
   <script src="./treeData2.js"></script>
   <script type="text/javascript" src='dynamic-style.js'></script>
+  <script type="text/javascript" src='mapStuff.js'></script>
   <script type="text/javascript" src='treeLayout.js'>
   </script>
   <script type="text/javascript" src='view-pan.js'></script>
-  <script type="text/javascript" src='mapStuff.js'></script>
   <script type="text/javascript">
 
     TraitMapDisplay.mapSimpleTraitAttributions();
-    update();
+    // update();
+    TraitMapDisplay.traitColorRings();
+
+
   </script>
 
 </body>
 </html>
+

@@ -33,7 +33,7 @@ Object.keys(OriginHypotheses).forEach(function(origHyp){
   }
 })
 
-function updateColors(){
+function updateColorsX(){
   var circulos = d3.selectAll('circle');
   // link.style('stroke', 'black')
 

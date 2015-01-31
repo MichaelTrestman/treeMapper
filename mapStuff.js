@@ -37,6 +37,69 @@ TraitMapDisplay.mapSimpleTraitAttributions = function(){
     var birds = TraitMapper.getNode("Birds");
   });
 }
+TraitMapDisplay.traitColorRings = function(traits){
+  // if (traits===undefined) {traits=[]};
+  // traits.forEach(function(trait){
+  //   d3.selectAll('.node').each(function(d){
+  //     var counter = 0;
+  //     if (d.flight) {
+  //       console.log('we got flight: ' + d.name);
+  //       d3.select(this).append('circle')
+  //         .attr('r', function(d){
+  //           counter += 5;
+  //           return d.size + counter-5;
+  //         })
+  //         .style('fill', "rgba(1, 1, 1, 0)")
+  //         .style('stroke-width', '5px')
+  //         .style('stroke', function(d){
+  //           return colors.flight
+  //         });
+  //     };
+  // })
+  d3.selectAll('.node').each(function(d){
+    var counter = 0;
+    if (d.flight) {
+      console.log('we got flight: ' + d.name);
+      d3.select(this).append('circle')
+        .attr('r', function(d){
+          counter += 5;
+          return d.size + counter-5;
+        })
+        .style('fill', "rgba(1, 1, 1, 0)")
+        .style('stroke-width', '5px')
+        .style('stroke', function(d){
+          return colors.flight
+        });
+    };
+    if (d.brains) {
+      console.log('we got brains: ' + d.name);
+      d3.select(this).append('circle')
+        .attr('r', function(d){
+          counter += 5;
+          return d.size + counter-5;
+        })
+        .style('fill', "rgba(1, 1, 1, 0)")
+        .style('stroke-width', '5px')
+        .style('stroke', function(d){
+          return colors.brains
+        });
+    };
+    if (d.homeothermy) {
+      console.log('we got homeothermy: ' + d.name);
+      d3.select(this).append('circle')
+        .attr('r', function(d){
+          counter += 5;
+          return d.size + counter - 5;
+        })
+        .style('fill', 'rgba(1, 1, 1, 0)')
+        .style('stroke-width', '5px')
+        .style('stroke', function(d){
+          return colors.homeothermy;
+        });
+    };
+  });
+
+}
 
 
 // updateColors();
