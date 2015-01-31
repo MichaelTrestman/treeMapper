@@ -9,11 +9,11 @@ var tree = d3.layout.tree()
   .size([height, width])
   .separation(function(a, b) { return (a.parent == b.parent ? 1 : 2) / a.depth; });
 
-var diagonal = d3.svg.diagonal.radial()
-    .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
+// var diagonal = d3.svg.diagonal.radial()
+//     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
 
-// var diagonal = d3.svg.diagonal()
-  // .projection(function(d) {return [d.y, d.x]; });
+var diagonal = d3.svg.diagonal()
+  .projection(function(d) {return [d.y, d.x]; });
 
 var svg = d3.select('body').append('svg')
   .attr('id', 'svg-canvas')
@@ -25,6 +25,8 @@ var svg = d3.select('body').append('svg')
 
 
 TraitMapper.setTree(AnimalTree)
+// TraitMapper.setTree(AmnioteTree)
+
 TraitMapper.addSize(20);
 root = TraitMapper.getMappedTree();
 
@@ -48,8 +50,13 @@ function update (source){
 
   var nodeEnter = node.enter().append('g')
     .attr('class', 'node')
+    .attr('id', function  (d) {
+      return d.name
+    })
     .attr('transform', function(d){
       if (!d.parent) { return 'translate(0,0)'};
+      if ( isNaN(d.parent.x) || isNaN(d.parent.y) ) { return 'translate(0,0)' };
+
       return 'translate(' + d.parent.y + ',' + d.parent.x + ')';
     })
     .on('click', click);
@@ -70,9 +77,12 @@ function update (source){
 
   var nodeUpdate = node.transition()
     .duration(duration)
-    .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
+    // .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
 
-    // .attr('transform', function(d){ return 'translate(' + d.y + ',' + d.x + ')'; });
+    .attr('transform', function(d){
+
+      return 'translate(' + d.y + ',' + d.x + ')';
+    });
 
   nodeUpdate.select('circle')
     .attr('r', function(d){
@@ -86,6 +96,7 @@ function update (source){
   var nodeExit = node.exit().transition()
     .duration(duration)
     .attr('transform', function(d){
+      if (!d.parent) return "translate(0,0)";
       return 'translate(' + d.parent.y + ',' + d.parent.x + ')';
     })
     .remove();
@@ -99,7 +110,6 @@ function update (source){
     .attr('class', 'link')
     .attr('d', function(d){
       if (d.parent){
-
         var o = {
           x: source.x0,
           y: source.y0
@@ -131,11 +141,12 @@ function update (source){
     }).remove();
     updateColors();
 }
-TraitMapper.hideAll();
+// not working!
+// TraitMapper.hideDescendantsOf( document.getElementById('Animals') );
 
 function click(d){
-  if (d.children){
 
+  if (d.children){
     TraitMapper.hideDescendantsOf(d);
     d.size *= 1.25
     // d._children = d.children;
@@ -145,6 +156,7 @@ function click(d){
     d._children = null;
     d.size *= 0.8
   }
+
   update(TraitMapper.getMappedTree());
   updateColors();
 }

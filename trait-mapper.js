@@ -45,12 +45,35 @@ var TraitMapper = (function(){
     if (node.children) {
       node._children = node.children;
       node.children = null;
-    }
-    if (node._children) {
       node._children.forEach(function(child){
-        recursivelyHideChildren(child);
+        recursivelyHideChildren(child)
       })
+    }
+  }
+  var
+  showChildren = function(node){
+    if (node._children) {
+      node.children = node._children;
+      node._children = null;
+    }
+  }
+
+  var recursivelyFindNode = function(name){
+    _foundNode = null;
+
+    function isNode(node, name){
+      if (name == node.name){ _foundNode = node; };
+      if (_foundNode) { return};
+      if (node.children) {
+        node.children.forEach(function(child){
+          isNode(child, name);
+        })
+      };
     };
+
+    isNode(_tree, name);
+
+    return _foundNode;
   }
 
   return {
@@ -70,12 +93,12 @@ var TraitMapper = (function(){
     hideDescendantsOf: function(node){
       recursivelyHideChildren(node);
     },
-    hideAll: function(){
-      recursivelyHideChildren(_tree);
-    },
     addSize: function(size){
       size = size ? size : 50
       recursivelyAddSize(_tree, size);
+    },
+    getNode: function(nodeName){
+      return recursivelyFindNode(nodeName)
     }
 
   }
