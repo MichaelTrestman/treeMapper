@@ -26,7 +26,16 @@ TraitMapDisplay.SimpleTraitAttributions = [
       'Arthropods',
       'Molluscs'
     ]
-  }
+  },
+  {
+    name: "secondary-aquatic",
+    taxa: [
+      'Cetaceans',
+      'Pinnipeds',
+      'Primates'
+    ]
+  },
+
 ];
 
 TraitMapDisplay.mapSimpleTraitAttributions = function(){
@@ -62,7 +71,7 @@ TraitMapDisplay.traitColorRings = function(traits){
     var counter = 6;
     ringWidth = 5;
     d3.select(this).append('circle')
-    .attr('r', function(d){ return d._children ? 15 : 5})
+    .attr('r', function(d){ return d._children ? 10 : 5})
     .style('fill', 'black')
 
     if (d.flight) {
@@ -102,6 +111,19 @@ TraitMapDisplay.traitColorRings = function(traits){
         .style('stroke-width', ringWidth + 'px')
         .style('stroke', function(d){
           return colors.homeothermy;
+        });
+    };
+    if (d['secondary-aquatic']) {
+
+      d3.select(this).append('circle')
+        .attr('r', function(d){
+          counter += 5;
+          return d.size + counter - 5;
+        })
+        .style('fill', 'rgba(1, 1, 1, 0)')
+        .style('stroke-width', ringWidth + 'px')
+        .style('stroke', function(d){
+          return colors['secondary-aquatic'];
         });
     };
   });

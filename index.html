@@ -49,13 +49,8 @@
         <p>
           click to highlight or unhighlight traits
         </p>
-        <ul id='hyp-list' class='no-list-styles'>
-            <!-- <li><div class='bordered' id='humans'>Humans</div></li>
-            <li><div class='bordered' id='greatApes'>Apes</div></li>
-            <li><div class='bordered' id='mammals'>Mammals</div></li>
-            <li><div class='bordered' id='amniotes'>Amniotes</div></li>
-            <li><div class='bordered' id='bigThree'>Big-Three</div></li>
-            <li><div class='bordered' id='animals'>Animals</div></li> -->
+        <ul id='trait-list' class='no-list-styles'>
+
         </ul>
       <div id='info-panel' class='panel '>
 
@@ -75,6 +70,14 @@
     // update();
     TraitMapDisplay.traitColorRings();
 
+
+    var traitList = d3.select('#trait-list');
+
+    TraitMapDisplay.SimpleTraitAttributions.forEach(function(traitAttr){
+      console.log(traitAttr)
+      traitList.append('li')
+        .text(traitAttr.name)
+    })
 
   </script>
 

@@ -4,6 +4,7 @@ var colors = {
   conscious: "rgba(201, 181, 59, 0.4)",
   homeothermy: "rgba(200, 10, 40, 0.4)",
   flight: "rgba(22, 50, 200, 0.4)",
+  'secondary-aquatic': "rgba(22, 250, 100, 0.7)"
 }
 
 var OriginHypotheses = {

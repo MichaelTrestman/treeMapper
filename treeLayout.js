@@ -67,7 +67,6 @@ function update (source){
       if (d._children) { d.size *= 1.25}
       return d.size
     });
-    // .style('fill', function(d){ return d._children ? '#aaa' : '#fff'; });
 
   nodeEnter.append('text')
     .attr('x', function(d) {return d.children || d._children ? -13 : 13; })
@@ -78,10 +77,7 @@ function update (source){
 
   var nodeUpdate = node.transition()
     .duration(duration)
-    // .attr("transform", function(d) { return "rotate(" + (d.x - 90) + ")translate(" + d.y + ")"; })
-
     .attr('transform', function(d){
-
       return 'translate(' + d.y + ',' + d.x + ')';
     });
 
