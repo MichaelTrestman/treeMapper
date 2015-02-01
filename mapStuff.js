@@ -56,17 +56,24 @@ TraitMapDisplay.traitColorRings = function(traits){
   //         });
   //     };
   // })
+  d3.selectAll('circle').remove();
   d3.selectAll('.node').each(function(d){
-    var counter = 0;
+    d3.select(this).select('circle').remove();
+    var counter = 6;
+    ringWidth = 5;
+    d3.select(this).append('circle')
+    .attr('r', function(d){ return d._children ? 15 : 5})
+    .style('fill', 'black')
+
     if (d.flight) {
       console.log('we got flight: ' + d.name);
       d3.select(this).append('circle')
         .attr('r', function(d){
-          counter += 5;
-          return d.size + counter-5;
+          counter += ringWidth;
+          return d.size + counter-ringWidth;
         })
         .style('fill', "rgba(1, 1, 1, 0)")
-        .style('stroke-width', '5px')
+        .style('stroke-width', ringWidth + 'px' )
         .style('stroke', function(d){
           return colors.flight
         });
@@ -79,7 +86,7 @@ TraitMapDisplay.traitColorRings = function(traits){
           return d.size + counter-5;
         })
         .style('fill', "rgba(1, 1, 1, 0)")
-        .style('stroke-width', '5px')
+        .style('stroke-width', ringWidth + 'px')
         .style('stroke', function(d){
           return colors.brains
         });
@@ -92,7 +99,7 @@ TraitMapDisplay.traitColorRings = function(traits){
           return d.size + counter - 5;
         })
         .style('fill', 'rgba(1, 1, 1, 0)')
-        .style('stroke-width', '5px')
+        .style('stroke-width', ringWidth + 'px')
         .style('stroke', function(d){
           return colors.homeothermy;
         });

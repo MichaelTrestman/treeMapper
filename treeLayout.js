@@ -1,15 +1,14 @@
-var height = 700,
-    width = 1100,
+var height = 900,
+    width =  1200,
     margin = 50,
     i = 0,
     duration = 300,
-    root,
-    heightShift = 1.0;
-    ;
+    root;
 
 var tree = d3.layout.tree()
   .size([height, width])
-  .separation(function(a, b) { return 1 /*(a.parent == b.parent ? 2 : 1) / a.depth */; });
+  // .separation(function(a,b){ return 2});
+  .separation(function(){return 1})//function(a, b) { return (a.parent == b.parent ? 20 : 30) ; });
 
 // var diagonal = d3.svg.diagonal.radial()
 //     .projection(function(d) { return [d.y, d.x / 180 * Math.PI]; });
@@ -21,7 +20,7 @@ var svg = d3.select('body').append('svg')
   .attr('id', 'svg-canvas')
   .attr('width', width + 4*margin)
   .attr('height', height + 1.25*margin)
-  .attr('viewBox', '-100 300 2000 600')
+  .attr('viewBox', '350 00 1200 1600')
   .append('g')
   .attr('transform', 'translate(' + margin + ',' + margin*0.666 + ')');
 
@@ -89,7 +88,7 @@ function update (source){
   nodeUpdate.select('circle')
     .attr('r', function(d){
       return d.size
-    });
+    })
     // .style('fill', function(d){ return d._children ? '#aaa' : '#fff'; });
 
   nodeUpdate.select('text')
@@ -102,6 +101,7 @@ function update (source){
       return 'translate(' + d.parent.y + ',' + d.parent.x + ')';
     })
     .remove();
+
   nodeExit.select('circle')
     .attr('r', 1e-6);
 
@@ -161,6 +161,6 @@ function click(d){
   }
 
   update(TraitMapper.getMappedTree());
-  TraitMapDisplay.traitColorRings();
+  // TraitMapDisplay.traitColorRings();
 }
 
