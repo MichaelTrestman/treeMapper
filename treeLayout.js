@@ -20,7 +20,7 @@ var svg = d3.select('body').append('svg')
   .attr('id', 'svg-canvas')
   .attr('width', width + 4*margin)
   .attr('height', height + 1.25*margin)
-  .attr('viewBox', '350 00 1200 1600')
+  .attr('viewBox', '250 0 1600 1500')
   .append('g')
   .attr('transform', 'translate(' + margin + ',' + margin*0.666 + ')');
 
@@ -31,14 +31,10 @@ TraitMapper.setTree(AnimalTree)
 TraitMapper.addSize(20);
 root = TraitMapper.getMappedTree();
 
-
-
 root.x0 = height / 2;
 root.y0 = 0;
-update(root);
-
 // d3.select(self.frameElement).style('height', '600px')
-
+// node.each(function(d){d.x*=1.5;})
 function update (source){
 
   var nodes = tree.nodes(root),
@@ -48,7 +44,7 @@ function update (source){
 
   var node = svg.selectAll('g.node')
     .data(nodes, function(d){ return d.id || (d.id = ++i); });
-
+  // node.each(function(d){d.x*=1.5;})
   var nodeEnter = node.enter().append('g')
     .attr('class', 'node')
     .attr('id', function  (d) {
@@ -61,12 +57,6 @@ function update (source){
       return 'translate(' + d.parent.y + ',' + d.parent.x + ')';
     })
     .on('click', click);
-
-  nodeEnter.append('circle')
-    .attr('r', function(d){
-      if (d._children) { d.size *= 1.25}
-      return d.size
-    });
 
   nodeEnter.append('text')
     .attr('x', function(d) {return d.children || d._children ? -13 : 13; })
@@ -105,6 +95,7 @@ function update (source){
     .data(links, function(d){ return d.target.id; });
 
   link.enter().insert('path', 'g')
+
     .attr('class', 'link')
     .attr('d', function(d){
       if (d.parent){
@@ -129,8 +120,8 @@ function update (source){
     .duration(duration)
     .attr('d', function(d){
       var o = {
-        x: source.x,
-        y: source.y
+        x: d.x,
+        y: d.y
       };
       return diagonal({
         source: o,
@@ -138,25 +129,25 @@ function update (source){
       });
     }).remove();
 
-    TraitMapDisplay.traitColorRings();
+    TraitMapDisplay.displayTraitColorRings(TraitMapDisplay.activeTraits());
+      // TraitMapDisplay.SimpleTraitAttributions.map(function(x){
+      //   return x.name
+      // })
 }
-// not working!
-// TraitMapper.hideDescendantsOf( document.getElementById('Animals') );
 
 function click(d){
 
   if (d.children){
     TraitMapper.hideDescendantsOf(d);
-    d.size *= 1.25
+    // d.size *= 1.25
     // d._children = d.children;
     // d.children = [];
   } else if (d._children){
     d.children = d._children;
     d._children = null;
-    d.size *= 0.8
+    // d.size *= 0.8
   }
 
   update(TraitMapper.getMappedTree());
-  // TraitMapDisplay.traitColorRings();
 }
 

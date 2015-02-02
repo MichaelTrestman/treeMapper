@@ -4,6 +4,7 @@ TraitMapDisplay = {};
 TraitMapDisplay.SimpleTraitAttributions = [
   {
     name: "flight",
+    active: true,
     taxa: [
     "Birds",
     "Insects",
@@ -11,6 +12,7 @@ TraitMapDisplay.SimpleTraitAttributions = [
   ]},
   {
     name: "homeothermy",
+    active: true,
     taxa: [
       "Birds",
       "Mammals",
@@ -21,6 +23,7 @@ TraitMapDisplay.SimpleTraitAttributions = [
   },
   {
     name: "brains",
+    active: true,
     taxa: [
       'Vertebrates',
       'Arthropods',
@@ -28,11 +31,14 @@ TraitMapDisplay.SimpleTraitAttributions = [
     ]
   },
   {
-    name: "secondary-aquatic",
+    name: "non-aquatic",
+    active: true,
     taxa: [
-      'Cetaceans',
-      'Pinnipeds',
-      'Primates'
+      'Tardigrades',
+      'Amniotes',
+      'Gastropods',
+      'Insects',
+      'Spiders'
     ]
   },
 
@@ -43,16 +49,17 @@ TraitMapDisplay.mapSimpleTraitAttributions = function(){
     var traitObj = {};
     traitObj[trait.name] = 'true';
     TraitMapper.mapTraits(traitObj, trait.taxa);
-    var birds = TraitMapper.getNode("Birds");
   });
 }
-TraitMapDisplay.traitColorRings = function(traits){
+
+TraitMapDisplay.displayTraitColorRingsX = function(traits){
+
   // if (traits===undefined) {traits=[]};
   // traits.forEach(function(trait){
   //   d3.selectAll('.node').each(function(d){
   //     var counter = 0;
   //     if (d.flight) {
-  //       console.log('we got flight: ' + d.name);
+  //       console.log('we got: ' + d.name);
   //       d3.select(this).append('circle')
   //         .attr('r', function(d){
   //           counter += 5;
@@ -65,6 +72,7 @@ TraitMapDisplay.traitColorRings = function(traits){
   //         });
   //     };
   // })
+
   d3.selectAll('circle').remove();
   d3.selectAll('.node').each(function(d){
     d3.select(this).select('circle').remove();
@@ -75,7 +83,6 @@ TraitMapDisplay.traitColorRings = function(traits){
     .style('fill', 'black')
 
     if (d.flight) {
-      console.log('we got flight: ' + d.name);
       d3.select(this).append('circle')
         .attr('r', function(d){
           counter += ringWidth;
@@ -88,7 +95,6 @@ TraitMapDisplay.traitColorRings = function(traits){
         });
     };
     if (d.brains) {
-      console.log('we got brains: ' + d.name);
       d3.select(this).append('circle')
         .attr('r', function(d){
           counter += 5;
@@ -101,7 +107,6 @@ TraitMapDisplay.traitColorRings = function(traits){
         });
     };
     if (d.homeothermy) {
-      console.log('we got homeothermy: ' + d.name);
       d3.select(this).append('circle')
         .attr('r', function(d){
           counter += 5;
@@ -113,7 +118,7 @@ TraitMapDisplay.traitColorRings = function(traits){
           return colors.homeothermy;
         });
     };
-    if (d['secondary-aquatic']) {
+    if (d['non-aquatic']) {
 
       d3.select(this).append('circle')
         .attr('r', function(d){
@@ -123,12 +128,16 @@ TraitMapDisplay.traitColorRings = function(traits){
         .style('fill', 'rgba(1, 1, 1, 0)')
         .style('stroke-width', ringWidth + 'px')
         .style('stroke', function(d){
-          return colors['secondary-aquatic'];
+          return colors['non-aquatic'];
         });
     };
   });
 
 }
-
-
-// updateColors();
+TraitMapDisplay.activeTraits = function(){
+  var traitNames = [];
+  this.SimpleTraitAttributions.forEach(function(traitAttr){
+    if (traitAttr.active) { traitNames.push(traitAttr.name)};
+  });
+  return traitNames;
+};

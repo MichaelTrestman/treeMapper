@@ -61,22 +61,46 @@
   <script src="./treeData2.js"></script>
   <script type="text/javascript" src='dynamic-style.js'></script>
   <script type="text/javascript" src='mapStuff.js'></script>
+  <script type="text/javascript" src = './TraitMapDisplay-displayTraitColorRings.js'></script>
   <script type="text/javascript" src='treeLayout.js'>
   </script>
   <script type="text/javascript" src='view-pan.js'></script>
   <script type="text/javascript">
 
     TraitMapDisplay.mapSimpleTraitAttributions();
-    // update();
-    TraitMapDisplay.traitColorRings();
+    update(TraitMapper.getMappedTree());
+    // TraitMapDisplay.displayTraitColorRings([
+        // 'flight'
+      // ]);
 
 
     var traitList = d3.select('#trait-list');
 
+    var colorsNotDisplayed = [];
+
     TraitMapDisplay.SimpleTraitAttributions.forEach(function(traitAttr){
-      console.log(traitAttr)
+
       traitList.append('li')
+        .attr('id', 'li-' + traitAttr.name)
+        .style('color', colors[traitAttr.name])
         .text(traitAttr.name)
+
+        .on("click", function(){
+
+          var clickedTrait = TraitMapDisplay.SimpleTraitAttributions.filter(function(x){
+              return x.name == this.id.replace('li-', '')
+            }.bind(this))[0];
+          if (clickedTrait.active) {
+            clickedTrait.active = false;
+          } else {
+            clickedTrait.active = true;
+          }
+
+          console.log(clickedTrait);
+
+          update(TraitMapper.getMappedTree());
+
+        });
     })
 
   </script>
