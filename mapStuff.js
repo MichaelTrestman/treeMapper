@@ -1,5 +1,6 @@
 
 TraitMapDisplay = {};
+TraitMapDisplay.justClickedTrait = {};
 
 TraitMapDisplay.SimpleTraitAttributions = [
   {
@@ -8,7 +9,8 @@ TraitMapDisplay.SimpleTraitAttributions = [
     taxa: [
     "Birds",
     "Insects",
-    "Bats"
+    "Bats",
+    "Pterosaurs"
   ]},
   {
     name: "homeothermy",
@@ -41,6 +43,15 @@ TraitMapDisplay.SimpleTraitAttributions = [
       'Spiders'
     ]
   },
+  {
+    name: 'secondary-aquatic',
+    active: 'true',
+    taxa: [
+      'Mosasaurs',
+      'Cetaceans',
+      'Pinnipeds'
+    ]
+  }
 
 ];
 
