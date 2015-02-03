@@ -19,11 +19,7 @@ TraitMapDisplay.displayTraitColorRings = function(traitNames){
         .style('fill', 'black');
 
     traitNames.forEach(function(traitName){
-
-
-
       if (d[traitName]) {
-
         thisNode
           .append('circle')
           .attr('id', 'li-' + traitName)
