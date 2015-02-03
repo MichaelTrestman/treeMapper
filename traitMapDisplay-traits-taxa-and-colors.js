@@ -1,6 +1,10 @@
-
-TraitMapDisplay = {};
-TraitMapDisplay.justClickedTrait = {};
+TraitMapDisplay.colors = {
+  brains: "rgba(10, 100, 10, 0.4)",
+  homeothermy: "rgba(200, 10, 40, 0.4)",
+  flight: "rgba(22, 50, 200, 0.4)",
+  'non-aquatic': "rgba(22, 250, 100, 0.7)",
+  'secondary-aquatic': 'rgba(122, 150, 00, 0.7)'
+};
 
 TraitMapDisplay.SimpleTraitAttributions = [
   {
@@ -55,18 +59,3 @@ TraitMapDisplay.SimpleTraitAttributions = [
 
 ];
 
-TraitMapDisplay.mapSimpleTraitAttributions = function(){
-  this.SimpleTraitAttributions.forEach(function(trait){
-    var traitObj = {};
-    traitObj[trait.name] = 'true';
-    TraitMapper.mapTraits(traitObj, trait.taxa);
-  });
-}
-
-TraitMapDisplay.activeTraits = function(){
-  var traitNames = [];
-  this.SimpleTraitAttributions.forEach(function(traitAttr){
-    if (traitAttr.active) { traitNames.push(traitAttr.name)};
-  });
-  return traitNames;
-};
