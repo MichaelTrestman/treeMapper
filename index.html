@@ -81,6 +81,8 @@
     TraitMapDisplay.SimpleTraitAttributions.forEach(function(traitAttr){
 
       traitList.append('li')
+        .append('button')
+        .style('font-size', '1em')
         .attr('id', 'li-' + traitAttr.name)
         .style('color', colors[traitAttr.name])
         .text(traitAttr.name)
@@ -91,8 +93,10 @@
               return x.name == this.id.replace('li-', '')
             }.bind(this))[0];
           if (clickedTrait.active) {
+            TraitMapDisplay.justClickedTrait = {};
             clickedTrait.active = false;
           } else {
+            TraitMapDisplay.justClickedTrait = clickedTrait;
             var length = TraitMapDisplay.SimpleTraitAttributions.length,
               selectedTrait;
             for (var i = 0; i < length; i++) {
@@ -105,7 +109,6 @@
           }
 
           console.log(clickedTrait);
-
           update(TraitMapper.getMappedTree());
 
         });
