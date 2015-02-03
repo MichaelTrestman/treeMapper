@@ -11,27 +11,42 @@ TraitMapDisplay.displayTraitColorRings = function(traitNames){
       // .select('circle#li-' + traitName)
       .remove();
 
-      thisNode
-        .append('circle')
-        .attr('r', function(d){
-          return d._children ? 10 : 6;
-        })
-        .style('fill', 'black');
+    thisNode
+      .append('circle')
+      .attr('r', function(d){
+        return d._children ? 10 : 6;
+      })
+      .style('fill', 'black');
 
-    traitNames.forEach(function(traitName){
+    traitNames.forEach(function(traitName, i){
       if (d[traitName]) {
         thisNode
           .append('circle')
           .attr('id', 'li-' + traitName)
           .attr('r', 0)
-          .style('fill', 'rgba(1, 1, 1, 0)')
-          .style('stroke-width', ringWidth + 'px')
-          .style('stroke', colors[traitName])
-          // .transition().duration(100)
           .attr('r', function(d){
             counter += ringWidth;
             return d.size + counter - ringWidth;
-          });
+          })
+          .style('fill', 'rgba(1, 1, 1, 0)')
+          .style('stroke', colors[traitName])
+          .style('stroke-width', '0px')
+          .transition().duration(function(d){
+            var dur = 0;
+            if (traitName === TraitMapDisplay.justClickedTrait.name) {
+             dur += 100;
+            }
+            return dur;
+          })
+          .style('stroke-width', 2*ringWidth + 'px')
+          .transition().duration(function(d){
+            var dur = 0;
+            if (traitName === TraitMapDisplay.justClickedTrait.name) {
+             dur += 100;
+            }
+            return dur;
+          })
+          .style('stroke-width', ringWidth + 'px')
       };
 
     });
