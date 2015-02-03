@@ -14,7 +14,7 @@ TraitMapDisplay.displayTraitColorRings = function(traitNames){
       thisNode
         .append('circle')
         .attr('r', function(d){
-          return d._children ? 5 : 2;
+          return d._children ? 10 : 6;
         })
         .style('fill', 'black');
 
@@ -23,13 +23,15 @@ TraitMapDisplay.displayTraitColorRings = function(traitNames){
         thisNode
           .append('circle')
           .attr('id', 'li-' + traitName)
+          .attr('r', 0)
+          .style('fill', 'rgba(1, 1, 1, 0)')
+          .style('stroke-width', ringWidth + 'px')
+          .style('stroke', colors[traitName])
+          // .transition().duration(100)
           .attr('r', function(d){
             counter += ringWidth;
             return d.size + counter - ringWidth;
-          })
-          .style('fill', 'rgba(1, 1, 1, 0)')
-          .style('stroke-width', ringWidth + 'px')
-          .style('stroke', colors[traitName]);
+          });
       };
 
     });
