@@ -93,6 +93,14 @@
           if (clickedTrait.active) {
             clickedTrait.active = false;
           } else {
+            var length = TraitMapDisplay.SimpleTraitAttributions.length,
+              selectedTrait;
+            for (var i = 0; i < length; i++) {
+              if (TraitMapDisplay.SimpleTraitAttributions[i] === clickedTrait) {
+                TraitMapDisplay.SimpleTraitAttributions.splice(i,1);
+                TraitMapDisplay.SimpleTraitAttributions.push(clickedTrait);
+              };
+            };
             clickedTrait.active = true;
           }
 
