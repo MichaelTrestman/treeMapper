@@ -102,7 +102,6 @@ TraitMapDisplay.treeLayout = (function(){
         .transition()
         .duration(duration)
         .attr('d', function(d){
-          console.log(d.source)
           if (d.source){
             var o = {
               x: d.source.x,
@@ -112,16 +111,7 @@ TraitMapDisplay.treeLayout = (function(){
               source: o,
               target: o
             });
-
           }
-          // var o = {
-          //   x: d.x,
-          //   y: d.y
-          // };
-          // return diagonal({
-          //   source: o,
-          //   target: o
-          // });
         })
         .remove();
         TraitMapDisplay.displayTraitColorRings(TraitMapDisplay.activeTraits());
@@ -133,7 +123,6 @@ TraitMapDisplay.treeLayout = (function(){
         d.children = d._children;
         d._children = null;
       }
-
       TraitMapDisplay.treeLayout.update(TraitMapper.getMappedTree());
     }
   }

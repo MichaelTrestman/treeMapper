@@ -27,12 +27,10 @@ var TraitMapper = (function(){
       })
     ){
       recursivelyMapTraitsToClade(traits, node)
-    } else{
-      if (node.children) {
-        node.children.forEach(function(child){
-          recursivelySearchForOriginTaxaToMapFrom(child, originTaxa, traits)
-        });
-      };
+    } else if (node.children) {
+      node.children.forEach(function(child){
+        recursivelySearchForOriginTaxaToMapFrom(child, originTaxa, traits)
+      });
     };
   };
 
@@ -56,8 +54,8 @@ var TraitMapper = (function(){
   var recursivelyFindNode = function(name){
     _foundNode = null;
     function isNode(node, name){
-      if (name == node.name){ _foundNode = node; };
-      if (_foundNode) { return};
+      if (name == node.name) _foundNode = node;
+      if (_foundNode) return;
       if (node.children) {
         node.children.forEach(function(child){
           isNode(child, name);
@@ -86,7 +84,7 @@ var TraitMapper = (function(){
       recursivelyHideChildren(node);
     },
     addSize: function(size){
-      size =  10
+      size =  size ? size : 10;
       recursivelyAddSize(_tree, size);
     },
     getNode: function(nodeName){
